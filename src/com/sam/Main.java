@@ -12,8 +12,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import com.sam.Display.*;
 
 public class Main {
+
+    final static boolean DEBUGGING = true;
 
     static ArrayList<String> getImages(String url) {
         ArrayList<String> listImage = new ArrayList<String>();
@@ -70,21 +73,30 @@ public class Main {
         }
     }
 
+    // Usage: give-me-everything [options] url [url...] [download to location]
     public static void main(String[] args) {
-        String destination = "/Users/admin/Desktop/";
-        String folderName = "hey/";
-        String url = "http://ghstkng.tumblr.com";
-        ArrayList<String> images = new ArrayList<String>();
+        String destination = "~/Desktop/";
+        String folderName = "give-me-everything/";
+        Display display = new Display();
 
-        String dirString = destination + folderName;
-        File dir = new File(dirString);
-        dir.mkdir();
+        String url;
+        if (args.length>=2) {
+            url = args[0];
+            ArrayList<String> images = new ArrayList<String>();
+            String dirString = args[args.length-1];
 
-        if (dir!=null) {
-            images = getImages(url);
-            printToLineImageUrls(images);
-            saveToFile(images, dirString, 0);
+            File dir = new File(dirString);
+            dir.mkdir();
+
+            if (dir!=null) {
+                images = getImages(url);
+                printToLineImageUrls(images);
+                saveToFile(images, dirString, 0);
+            }
+
+        } else {
+            // no args passed in
+            display.usage();
         }
-
     }
 }
