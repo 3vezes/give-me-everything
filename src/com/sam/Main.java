@@ -33,36 +33,58 @@ public class Main {
         return listImage;
     }
 
-    static void printImageUrls(ArrayList<String> images) {
+    static void printToLineImageUrls(ArrayList<String> images) {
         for (String url : images) {
             System.out.println(url);
         }
     }
 
-    public static void main(String[] args) {
-        String destination = "/Users/admin/Desktop";
-        String url = "http://ghstkng.tumblr.com";
-        ArrayList<String> images = new ArrayList<String>();
-        images = getImages(url);
-
+    static void saveToFile (ArrayList<String> images, String destination, int x) {
         BufferedImage image = null;
         int i = 0;
         for (String imageUrl : images) {
             try {
-                URL imageUrlUrl = new URL(imageUrl);
-                image = ImageIO.read(imageUrlUrl);
-
-                String fileLocation = destination + "/image" + i + ".jpg";
-                ImageIO.write(image, "jpg", new File(fileLocation));
-
-                i++;
+                if (imageUrl.contains("http://")) {
+                    URL imageUrlUrl = new URL(imageUrl);
+                    image = ImageIO.read(imageUrlUrl);
+                    String fileLocation = destination + "/" + "page" + x + "image" + i +".jpg";
+                    if (image != null && image.getHeight() > 200) {
+                        ImageIO.write(image, "jpg", new File(fileLocation));
+                        i++;
+                    }
+                }
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                System.out.println("Bad url " + imageUrl);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Bad io " + imageUrl);
             }
         }
+    }
 
-        printImageUrls(images);
+    static void scrapeFromPages(String url, String destination, ArrayList<String> images) {
+        for (int i = 650; i <= 679; i++) {
+            String pageUrl = url + i;
+            images = getImages(pageUrl);
+            printToLineImageUrls(images);
+            saveToFile(images, destination, i);
+        }
+    }
+
+    public static void main(String[] args) {
+        String destination = "/Users/admin/Desktop/";
+        String folderName = "hey/";
+        String url = "http://ghstkng.tumblr.com";
+        ArrayList<String> images = new ArrayList<String>();
+
+        String dirString = destination + folderName;
+        File dir = new File(dirString);
+        dir.mkdir();
+
+        if (dir!=null) {
+            images = getImages(url);
+            printToLineImageUrls(images);
+            saveToFile(images, dirString, 0);
+        }
+
     }
 }
