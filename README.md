@@ -13,9 +13,7 @@ Usage: give-me-everything url location-to-save-to
 ####Manual Install
 \* ant is required to compile project
 
-1. Clone repo wherever you like.
-2. Use ant to compile the build file.
-3. Move the compiled jar file in bin/jar to preferred location.
+3. Move the compiled jar file in bin/jar to preferred location. (you can recompile using ant if you want, or simply used the compiled jar in the project dir)
 4. Move give-me-everything.sh to your dotfiles folder.
 5. Change CLASSPATH in give-me-everything.sh to the location where you'll be storing the jar file.
 5. Source give-me-everything.sh in your rc file.
