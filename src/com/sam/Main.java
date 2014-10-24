@@ -5,7 +5,10 @@ import com.sam.FileManagement.FileManager;
 import com.sam.Network.Network;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Main {
@@ -26,6 +29,18 @@ public class Main {
         Display display = new Display();
         Network network = new Network();
 
+        int minHeight = 0;
+
+        System.out.println("Enter a Min Height: ");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            minHeight = br.read();
+        } catch (IOException e) {
+            System.out.println("Invalid value!");
+            System.exit(1);
+        }
+
         String url;
         if (args.length>=2) {
             url = args[0];
@@ -45,9 +60,14 @@ public class Main {
                     display.singleLink(singleUrl);
 
                     imageTemp = network.getImageFromUrl(singleUrl);
+
                     if (imageTemp != null) {
                         // got image save to file
-                        fm.saveImage(imageTemp, singleUrl);
+                        if (minHeight < imageTemp.getHeight()) {
+                            fm.saveImage(imageTemp, singleUrl);
+                        } else {
+                            System.out.println("Less than minimum height " + singleUrl);
+                        }
                     }
                 }
             }

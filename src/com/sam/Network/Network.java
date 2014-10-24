@@ -34,7 +34,6 @@ public class Network {
 
             for (Element image : images) {
                 String imageUrl = getUrlWithNoParameters(image.attr("src"));
-                System.out.println("**** IMAGE URL : " + imageUrl);
 
                 if (!imageUrls.contains(imageUrl)) {
                     imageUrls.add(imageUrl);
@@ -50,10 +49,8 @@ public class Network {
     public BufferedImage getImageFromUrl(String imageUrl) {
         BufferedImage image = null;
         try {
-            if (imageUrl.contains("http://")) {
-                URL imageUrlUrl = new URL(imageUrl);
-                image = ImageIO.read(imageUrlUrl);
-            }
+            URL imageUrlUrl = new URL(imageUrl);
+            image = ImageIO.read(imageUrlUrl);
         } catch (MalformedURLException e) {
             System.err.println("ERROR::Bad url " + imageUrl);
         } catch (IOException e) {
