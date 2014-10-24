@@ -13,7 +13,7 @@
     <property name="lib.dir" value="libs"/>
 
     <path id="classpath">
-        <fileset dir="${lib.dir}" includes="*.jar"/>
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
 
     <!-- Init -->

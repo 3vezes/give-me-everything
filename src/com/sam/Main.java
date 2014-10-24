@@ -4,6 +4,8 @@ import com.sam.Display.Display;
 import com.sam.FileManagement.FileManager;
 import com.sam.Network.Network;
 
+import org.jsoup.*;
+import org.apache.commons.io.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
