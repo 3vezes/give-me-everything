@@ -1,19 +1,12 @@
 package com.sam;
 
+import com.sam.Display.Display;
+import com.sam.FileManagement.FileManager;
 import com.sam.Network.Network;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import com.sam.Display.*;
 
 public class Main {
 
@@ -29,6 +22,7 @@ public class Main {
     public static void main(String[] args) {
         String destination = "~/Desktop/";
         String folderName = "give-me-everything/";
+        FileManager fm;
         Display display = new Display();
         Network network = new Network();
 
@@ -40,12 +34,25 @@ public class Main {
 
             File dir = new File(dirString);
             dir.mkdir();
+            fm = new FileManager(dirString);
 
             if (dir!=null) {
-                urlsPulled = network.getImages(url);
-                printToLineImageUrls(urlsPulled);
-                network.saveToFile(urlsPulled, dirString, 0);
+                urlsPulled = network.getImageUrls(url);
+                display.foundList(urlsPulled);
+
+                for (String singleUrl : urlsPulled) {
+                    BufferedImage imageTemp;
+                    display.singleLink(singleUrl);
+
+                    imageTemp = network.getImageFromUrl(singleUrl);
+                    if (imageTemp != null) {
+                        // got image save to file
+                        fm.saveImage(imageTemp, singleUrl);
+                    }
+                }
             }
+
+            System.out.println("Done :)");
 
         } else {
             // no args passed in

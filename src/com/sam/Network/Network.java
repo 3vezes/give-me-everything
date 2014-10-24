@@ -21,7 +21,7 @@ public class Network {
 
     }
 
-    public ArrayList<String> getImages(String url) {
+    public ArrayList<String> getImageUrls(String url) {
         ArrayList<String> listImage = new ArrayList<String>();
         Document doc;
 
@@ -61,10 +61,25 @@ public class Network {
         }
     }
 
+    public BufferedImage getImageFromUrl(String imageUrl) {
+        BufferedImage image = null;
+        try {
+            if (imageUrl.contains("http://")) {
+                URL imageUrlUrl = new URL(imageUrl);
+                image = ImageIO.read(imageUrlUrl);
+            }
+        } catch (MalformedURLException e) {
+            System.err.println("ERROR::Bad url " + imageUrl);
+        } catch (IOException e) {
+            System.err.println("ERROR::Bad io " + imageUrl);
+        }
+        return image;
+    }
+
     public void scrapeFromPages(String url, String destination, ArrayList<String> images) {
         for (int i = 650; i <= 679; i++) {
             String pageUrl = url + i;
-            images = getImages(pageUrl);
+            images = getImageUrls(pageUrl);
             saveToFile(images, destination, i);
         }
     }

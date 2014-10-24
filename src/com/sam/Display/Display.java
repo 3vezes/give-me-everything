@@ -1,5 +1,7 @@
 package com.sam.Display;
 
+import java.util.ArrayList;
+
 /**
  * Created by admin on 10/23/14.
  */
@@ -17,5 +19,18 @@ public class Display {
                 "\n");
         System.out.println("Error: " +
                 "Missing 2 arguments");
+    }
+
+    public void singleLink(String url) {
+        System.out.println("Downloading from " + url);
+        System.out.println("...");
+    }
+
+    public void savingInto(String directory) {
+        System.out.println("Saving into " + directory);
+    }
+
+    public void foundList(ArrayList<String> imageUrls) {
+        System.out.println("Found " + imageUrls.size() + " links");
     }
 }
