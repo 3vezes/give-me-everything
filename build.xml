@@ -28,13 +28,16 @@
         description="compile the source ">
         <!-- Compile from src into build -->
         <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" includeantruntime="false"/>
+        <echo>${toString:classpath}</echo>
     </target>
 
     <target name="jar" depends="compile">
         <mkdir dir="${jar.dir}"/>
         <!-- Put everything in build into jar file -->
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
             <manifest>
+                <attribute name="DependencyFinder" value="main"/>
                 <attribute name="Main-Class" value="${main.class}"/>
             </manifest>
         </jar>
