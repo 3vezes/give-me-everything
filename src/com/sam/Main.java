@@ -35,7 +35,8 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
-            minHeight = br.read();
+            String line = br.readLine();
+            minHeight = Integer.parseInt(line);
         } catch (IOException e) {
             System.out.println("Invalid value!");
             System.exit(1);
@@ -63,10 +64,11 @@ public class Main {
 
                     if (imageTemp != null) {
                         // got image save to file
-                        if (minHeight < imageTemp.getHeight()) {
+                        System.out.println("getHeight: " + imageTemp.getHeight() + ", minHeight: " + minHeight);
+                        if (imageTemp.getHeight() > minHeight) {
                             fm.saveImage(imageTemp, singleUrl);
                         } else {
-                            System.out.println("Less than minimum height " + singleUrl);
+                            System.err.println("Less than minimum height " + singleUrl);
                         }
                     }
                 }
