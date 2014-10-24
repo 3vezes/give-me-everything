@@ -1,5 +1,8 @@
 # give-me-everything
-==================
+
+#### Problems
+- Image quality is default imageIO quality, need to change to higher compression quality.
+- Need to add options.
 
 ## Description
 Java program downloads all images from a url to disk
