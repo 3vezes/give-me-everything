@@ -27,7 +27,7 @@
     <target name="compile" depends="init"
         description="compile the source ">
         <!-- Compile from src into build -->
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" includeantruntime="false"/>
     </target>
 
     <target name="jar" depends="compile">
