@@ -1,5 +1,6 @@
 package com.sam.Network;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -22,43 +25,26 @@ public class Network {
     }
 
     public ArrayList<String> getImageUrls(String url) {
-        ArrayList<String> listImage = new ArrayList<String>();
+        ArrayList<String> imageUrls = new ArrayList<String>();
         Document doc;
 
         try {
             doc = Jsoup.connect(url).get();
-            Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+            Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|JPE?G|gif)]");
 
             for (Element image : images) {
-                listImage.add(image.attr("src"));
+                String imageUrl = getUrlWithNoParameters(image.attr("src"));
+                System.out.println("**** IMAGE URL : " + imageUrl);
+
+                if (!imageUrls.contains(imageUrl)) {
+                    imageUrls.add(imageUrl);
+                }
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return listImage;
-    }
-
-    public void saveToFile (ArrayList<String> images, String destination, int x) {
-        BufferedImage image = null;
-        int i = 0;
-        for (String imageUrl : images) {
-            try {
-                if (imageUrl.contains("http://")) {
-                    URL imageUrlUrl = new URL(imageUrl);
-                    image = ImageIO.read(imageUrlUrl);
-                    String fileLocation = destination + "/" + "page" + x + "image" + i +".jpg";
-                    if (image != null && image.getHeight() > 200) {
-                        ImageIO.write(image, "jpg", new File(fileLocation));
-                        i++;
-                    }
-                }
-            } catch (MalformedURLException e) {
-                System.out.println("Bad url " + imageUrl);
-            } catch (IOException e) {
-                System.out.println("Bad io " + imageUrl);
-            }
-        }
+        return imageUrls;
     }
 
     public BufferedImage getImageFromUrl(String imageUrl) {
@@ -76,11 +62,18 @@ public class Network {
         return image;
     }
 
-    public void scrapeFromPages(String url, String destination, ArrayList<String> images) {
-        for (int i = 650; i <= 679; i++) {
-            String pageUrl = url + i;
-            images = getImageUrls(pageUrl);
-            saveToFile(images, destination, i);
+    public String getUrlWithNoParameters (String url) {
+        String result = null;
+        try {
+            URI uri = new URI(url);
+            result = uri.getScheme();
+            result += "://";
+            result += uri.getAuthority();
+            result += uri.getRawPath();
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
+        return result;
     }
 }
