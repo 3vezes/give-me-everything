@@ -1,0 +1,43 @@
+<project default="compile">
+
+  <property name="build.dir" value="bin"/>
+  <property name="src.dir" value="src"/>
+  <property name="lib.dir" value="libs"/>
+  <property name="dist.dir" value="dist">
+  <property name="classes.dir" value="${build.dir}/classes"/>
+  <property name="jar.dir" value="${build.dir}/jar"/>
+  <!-- compiled jar name -->
+  <property name="jar.file" value="${jar.dir}/give-me-everything.jar"/>
+  <property name="manifest.file" value="${jar.dir}/MANIFEST>MF"/>
+
+  <property name="main.class" value="com.sam.Main">
+  
+  <!-- Init -->
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${classes.dir}"/>
+    <mkdir dir="${jar.dir}"/>
+  </target>
+
+  <path id="project.classpath">
+    <pathelement location="${src.dir}"/>
+    <path refid="external.jars" />
+  </path>
+
+  <target name="compile" depends="init"
+    description="compile the source ">
+    <!-- Compile from src into build -->
+    <javac srcdir="${src.dir}" destdir="${build.dir}">
+    <!-- Put everything in build into jar file -->
+    <jar jarfile="${dist.dir}/lib/${jar.file}" basedir="${build.dir}"/>
+  </target>
+
+  <target name="clean"
+    description="clean up" >
+    <!-- delete build and dist directory tree -->
+    <delete dir="${build.dir}"/>
+    <delete dir="${dist.dir}" />
+  </target>
+
+</project>
