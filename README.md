@@ -19,3 +19,7 @@ Usage: give-me-everything url location-to-save-to
 5. Source give-me-everything.sh in your rc file.
 6. Done.
 
+####Lazy Install
+
+1. Run the install file <code>./install</code> this will move the compiled jar and give-me-everything.sh into your home directory into ~/.give-me-everything
+2. You still have to source the file in your dotfiles, add <code>source ~/give-me-everything/give-me-everything.sh</code>
