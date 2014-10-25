@@ -1,6 +1,6 @@
 #!/bin/bash 
 
 give-me-everything() {
-  CLASSPATH=REPLACE_WITH_YOUR_JAR_LOCATION
+  CLASSPATH=$HOME/.give-me-everything/give-me-everything.jar
   java -jar $CLASSPATH "$@"
 }

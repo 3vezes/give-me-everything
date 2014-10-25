@@ -1,0 +1,24 @@
+#!/bin/bash
+# Author: esayemm
+# https://github.com/esayemm/give-me-everything
+###############################################
+echo ''
+echo 'give-me-everything Installer'
+echo ''
+
+function init() {
+if [[ -f "$HOME/.give-me-everything/" ]]; then
+  echo 'Already installed'
+else
+  echo -e "Installing into $HOME/.give-me-everything"
+  mkdir ~/.give-me-everything
+  cp give-me-everything.jar $HOME/.give-me-everything
+  cp give-me-everything.sh $HOME/.give-me-everything
+fi
+
+echo "Done"
+echo "now source $HOME/.give-me-everything/give-me-everything.sh"
+
+}
+
+init
