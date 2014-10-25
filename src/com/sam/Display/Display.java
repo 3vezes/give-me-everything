@@ -2,13 +2,9 @@ package com.sam.Display;
 
 import java.util.ArrayList;
 
-/**
- * Created by admin on 10/23/14.
- */
 public class Display {
-    public Display() {
-
-    }
+    
+    public Display() {}
 
     public void usage() {
         System.out.println("Usage: give-me-everything " +

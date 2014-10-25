@@ -2,7 +2,6 @@ package com.sam.FileManagement;
 
 import com.sam.Display.Display;
 import org.apache.commons.io.FilenameUtils;
-
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
@@ -10,10 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by admin on 10/23/14.
- */
 public class FileManager {
+
     File directory;
     Display mDisplay;
     ImageWriter mWriter;
@@ -31,7 +28,6 @@ public class FileManager {
     public void saveImage(BufferedImage image, String url) {
         String ext = getExt(url);
         String imageLocation = getFileName(url);
-
         File imageFile = null;
         try {
             imageFile = new File(directory.getCanonicalPath() + "/" + imageLocation + "." + ext);
@@ -40,7 +36,6 @@ public class FileManager {
         }
         try {
             mDisplay.savingInto(imageFile.getPath());
-
             if (ext == "jpe?g" || ext == "JPE?G") {
                 mWriter = ImageIO.getImageWritersByFormatName("jpeg").next();
                 ImageWriteParam param = mWriter.getDefaultWriteParam();
@@ -63,5 +58,4 @@ public class FileManager {
     public String getExt(String url) {
         return FilenameUtils.getExtension(url);
     }
-
 }

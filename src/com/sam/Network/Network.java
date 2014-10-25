@@ -5,7 +5,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,30 +15,22 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by admin on 10/23/14.
- */
 public class Network {
-    public Network() {
 
-    }
+    public Network() {}
 
     public ArrayList<String> getImageUrls(String url) {
         ArrayList<String> imageUrls = new ArrayList<String>();
         Document doc;
-
         try {
             doc = Jsoup.connect(url).get();
             Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|JPE?G|gif)]");
-
             for (Element image : images) {
                 String imageUrl = getUrlWithNoParameters(image.attr("src"));
-
                 if (!imageUrls.contains(imageUrl)) {
                     imageUrls.add(imageUrl);
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,7 +58,6 @@ public class Network {
             result += "://";
             result += uri.getAuthority();
             result += uri.getRawPath();
-
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
